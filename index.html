@@ -3,18 +3,208 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Codex PR Demo</title>
-    <style>
-      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
-      body { display: grid; min-height: 100vh; margin: 0; place-items: center; }
-      main { max-width: 36rem; padding: 2rem; text-align: center; }
-      h1 { margin-bottom: .5rem; }
-    </style>
+    <meta name="description" content="A polished project dashboard for planning and tracking work.">
+    <title>Flowboard — Project dashboard</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <main>
-      <h1>Codex PR Demo</h1>
-      <p>This project is ready for GitHub pull-request testing.</p>
-    </main>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Flowboard home">
+          <span class="brand-mark">F</span>
+          <span>flowboard</span>
+        </a>
+
+        <button class="create-button" id="new-task" type="button">
+          <span aria-hidden="true">+</span> Create task
+        </button>
+
+        <nav class="nav-list" aria-label="Workspace">
+          <a href="#board" class="nav-item active"><span aria-hidden="true">▦</span> My workspace</a>
+          <a href="#overview" class="nav-item"><span aria-hidden="true">◌</span> Overview</a>
+          <a href="#board" class="nav-item"><span aria-hidden="true">⌘</span> Projects</a>
+          <a href="#board" class="nav-item"><span aria-hidden="true">✓</span> My tasks</a>
+        </nav>
+
+        <div class="sidebar-projects">
+          <p class="section-label">Your projects</p>
+          <a href="#board" class="project-link selected"><span class="project-dot violet"></span> Product launch</a>
+          <a href="#board" class="project-link"><span class="project-dot coral"></span> Website refresh</a>
+          <a href="#board" class="project-link"><span class="project-dot mint"></span> Mobile app</a>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="member-avatar avatar-lilac">AM</div>
+          <div>
+            <strong>Adrita Mitra</strong>
+            <span>Free workspace</span>
+          </div>
+          <button class="more-button" type="button" aria-label="Account options">•••</button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="top">
+        <header class="topbar">
+          <button class="mobile-menu" type="button" aria-label="Open navigation">☰</button>
+          <div class="breadcrumbs"><span>Projects</span><b>/</b><strong>Product launch</strong></div>
+          <div class="topbar-actions">
+            <label class="search-box" for="task-search">
+              <span aria-hidden="true">⌕</span>
+              <input id="task-search" type="search" placeholder="Search tasks" autocomplete="off">
+              <kbd>⌘ K</kbd>
+            </label>
+            <button class="icon-button" id="theme-toggle" type="button" aria-label="Switch color theme">◐</button>
+            <button class="avatar-button avatar-sky" type="button" aria-label="Your profile">AM</button>
+          </div>
+        </header>
+
+        <section class="project-hero" id="overview">
+          <div>
+            <div class="eyebrow"><span class="project-dot violet"></span> Active project</div>
+            <h1>Product launch</h1>
+            <p>Bring the new experience to market with a confident, coordinated launch.</p>
+          </div>
+          <div class="hero-actions">
+            <div class="team" aria-label="Project members">
+              <span class="member-avatar avatar-coral">JD</span>
+              <span class="member-avatar avatar-mint">SK</span>
+              <span class="member-avatar avatar-gold">ML</span>
+              <span class="member-avatar avatar-lilac">AM</span>
+              <button type="button" aria-label="Invite a team member">+</button>
+            </div>
+            <button class="secondary-button" id="share-button" type="button">Share</button>
+            <button class="primary-button" id="hero-new-task" type="button"><span aria-hidden="true">+</span> New task</button>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Project statistics">
+          <article class="stat-card">
+            <span class="stat-icon icon-violet" aria-hidden="true">▦</span>
+            <div><span>Total tasks</span><strong id="total-count">8</strong></div>
+            <span class="trend">+2 this week</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-icon icon-amber" aria-hidden="true">◔</span>
+            <div><span>In progress</span><strong id="progress-count">3</strong></div>
+            <span class="trend neutral">On track</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-icon icon-mint" aria-hidden="true">✓</span>
+            <div><span>Completed</span><strong id="done-count">2</strong></div>
+            <span class="trend">+25% this month</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-icon icon-coral" aria-hidden="true">◷</span>
+            <div><span>Due this week</span><strong>3</strong></div>
+            <span class="trend warning">Needs focus</span>
+          </article>
+        </section>
+
+        <section class="board-section" id="board" aria-labelledby="board-heading">
+          <div class="board-toolbar">
+            <div>
+              <p class="eyebrow">Sprint 05</p>
+              <h2 id="board-heading">Launch board</h2>
+            </div>
+            <div class="board-actions">
+              <button class="filter-button" id="filter-button" type="button"><span aria-hidden="true">≡</span> All tasks <span aria-hidden="true">⌄</span></button>
+              <button class="icon-button" id="board-settings" type="button" aria-label="Board settings">•••</button>
+            </div>
+          </div>
+
+          <div class="kanban-board" aria-label="Project task board">
+            <section class="board-column" data-status="backlog" aria-labelledby="backlog-heading">
+              <header class="column-heading"><span class="status-dot slate"></span><h3 id="backlog-heading">Backlog</h3><span class="task-count">2</span><button class="column-add" type="button" aria-label="Add backlog task">+</button></header>
+              <div class="task-list">
+                <article class="task-card" data-search="market research insights research">
+                  <div class="task-card-top"><span class="tag tag-blue">Research</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Summarize market research insights</h4>
+                  <p>Pull the strongest themes into one launch brief.</p>
+                  <div class="task-meta"><span>#12</span><div><span class="member-avatar avatar-sky">AM</span><span class="calendar">Jun 21</span></div></div>
+                </article>
+                <article class="task-card" data-search="customer stories social proof">
+                  <div class="task-card-top"><span class="tag tag-pink">Content</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Collect customer launch stories</h4>
+                  <p>Find three customer moments worth sharing.</p>
+                  <div class="task-meta"><span>#14</span><div><span class="member-avatar avatar-gold">ML</span><span class="calendar">Jun 23</span></div></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="board-column" data-status="progress" aria-labelledby="progress-heading">
+              <header class="column-heading"><span class="status-dot amber"></span><h3 id="progress-heading">In progress</h3><span class="task-count">3</span><button class="column-add" type="button" aria-label="Add in-progress task">+</button></header>
+              <div class="task-list">
+                <article class="task-card feature-card" data-search="landing page launch campaign design">
+                  <div class="task-card-top"><span class="tag tag-violet">Design</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Polish the launch landing page</h4>
+                  <p>Refine the story, social proof, and sign-up flow.</p>
+                  <div class="progress-line"><span style="width: 72%"></span></div>
+                  <div class="task-meta"><span>#08 <b>72%</b></span><div><span class="member-avatar avatar-lilac">JD</span><span class="calendar urgent">Jun 18</span></div></div>
+                </article>
+                <article class="task-card" data-search="email lifecycle campaign copy">
+                  <div class="task-card-top"><span class="tag tag-mint">Marketing</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Write the lifecycle email sequence</h4>
+                  <p>Draft the welcome, teaser, and launch emails.</p>
+                  <div class="task-meta"><span>#11</span><div><span class="member-avatar avatar-mint">SK</span><span class="calendar">Jun 20</span></div></div>
+                </article>
+                <article class="task-card" data-search="analytics tracking measurement events">
+                  <div class="task-card-top"><span class="tag tag-orange">Engineering</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Set up launch analytics events</h4>
+                  <p>Make sure the launch funnel is measurable end to end.</p>
+                  <div class="task-meta"><span>#15</span><div><span class="member-avatar avatar-coral">JD</span><span class="calendar">Jun 24</span></div></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="board-column" data-status="review" aria-labelledby="review-heading">
+              <header class="column-heading"><span class="status-dot blue"></span><h3 id="review-heading">In review</h3><span class="task-count">1</span><button class="column-add" type="button" aria-label="Add review task">+</button></header>
+              <div class="task-list">
+                <article class="task-card" data-search="pricing proposal review strategy">
+                  <div class="task-card-top"><span class="tag tag-blue">Strategy</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Review the pricing proposal</h4>
+                  <p>Validate final packaging and rollout notes.</p>
+                  <div class="task-meta"><span>#09</span><div><span class="member-avatar avatar-gold">ML</span><span class="calendar">Jun 19</span></div></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="board-column" data-status="done" aria-labelledby="done-heading">
+              <header class="column-heading"><span class="status-dot green"></span><h3 id="done-heading">Done</h3><span class="task-count">2</span><button class="column-add" type="button" aria-label="Add completed task">+</button></header>
+              <div class="task-list">
+                <article class="task-card completed" data-search="launch goals metrics define">
+                  <div class="task-card-top"><span class="tag tag-mint">Planning</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Define launch goals and metrics</h4>
+                  <p>Align the team on measurable outcomes.</p>
+                  <div class="task-meta"><span>#02</span><div><span class="member-avatar avatar-sky">AM</span><span class="calendar">Jun 11</span></div></div>
+                </article>
+                <article class="task-card completed" data-search="visual system brand components">
+                  <div class="task-card-top"><span class="tag tag-violet">Design</span><button type="button" aria-label="Task options">•••</button></div>
+                  <h4>Ship the visual system</h4>
+                  <p>Publish a reusable set of launch components.</p>
+                  <div class="task-meta"><span>#05</span><div><span class="member-avatar avatar-lilac">JD</span><span class="calendar">Jun 14</span></div></div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="task-modal" hidden>
+      <section class="task-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="close-modal" type="button" aria-label="Close task form">×</button>
+        <p class="eyebrow">New task</p>
+        <h2 id="modal-title">Add a task</h2>
+        <form id="task-form">
+          <input id="task-status" type="hidden" value="backlog">
+          <label>Task title<input id="task-title" name="title" required maxlength="90" placeholder="What needs to happen?"></label>
+          <label>Short description<textarea id="task-description" name="description" maxlength="160" placeholder="Add helpful context (optional)"></textarea></label>
+          <label>Status<select id="task-status-select" name="status"><option value="backlog">Backlog</option><option value="progress">In progress</option><option value="review">In review</option><option value="done">Done</option></select></label>
+          <button class="primary-button submit-task" type="submit">Create task</button>
+        </form>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
   </body>
 </html>
